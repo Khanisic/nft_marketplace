@@ -33,7 +33,7 @@ const CreateNFT = () => {
   } = useDropzone({
     onDrop,
     accept: 'image/*',
-    maxSize: 50000,
+    maxSize: 50000000,
   });
 
   const fileStyle = useMemo(
