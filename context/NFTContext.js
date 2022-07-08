@@ -85,7 +85,13 @@ export const NFTProvider = ({ children }) => {
   };
 
   const fetchNFTs = async () => {
-    const provider = new ethers.providers.JsonRpcProvider();
+    const provider = new ethers.providers.AlchemyProvider('goerli', 'gWfpFUrefvct5a7LThyvFfk-WFpmdx9p');
+
+    // const provider = new HDWalletProvider(
+    //   'exile enough road quote render sea depart voice iron hedgehog vocal cube',
+    //   'https://rinkeby.infura.io/v3/bdee63d200894dfb8d793b37d5a53115'
+    // );
+
     const contract = fetchContract(provider);
 
     const data = await contract.fetchMarketItems();
