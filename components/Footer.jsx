@@ -1,15 +1,18 @@
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
-
+import { useRouter } from 'next/router';
 import images from '../assets';
 import Button from './Button';
 
-const FooterLinks = ({ heading, items, extraClasses }) => (
-  <div className={`flex-1 justify-start items-start ${extraClasses}`}>
-    <h3 className="font-poppins dark:text-white text-nft-black-1 font-semibold text-xl mb-10">{heading}</h3>
-    {items.map((item, index) => <p key={item + index} className="font-poppins dark:text-white text-nft-black-1 font-normal text-base cursor-pointer dark:hover:text-nft-gray-1 hover:text-nft-black-1 my-3">{item}</p>)}
-  </div>
-);
+const FooterLinks = ({ heading, items, extraClasses }) => {
+  const router = useRouter();
+  return (
+    <div className={`flex-1 justify-start items-start ${extraClasses}`}>
+      <h3 className="font-poppins dark:text-white text-nft-black-1 font-semibold text-xl mb-10">{heading}</h3>
+      {items.map((item, index) => <p onClick={() => { router.push(`/${item.toLowerCase()}`) }} key={item + index} className="font-poppins dark:text-white text-nft-black-1 font-normal text-base cursor-pointer dark:hover:text-nft-gray-1 hover:text-nft-black-1 my-3">{item}</p>)}
+    </div>
+  )
+};
 
 const Footer = () => {
   const { theme } = useTheme();
@@ -36,7 +39,7 @@ const Footer = () => {
         </div>
 
         <div className="flex-1 flexBetweenStart flex-wrap ml-10 md:ml-0 md:mt-8">
-          <FooterLinks heading="CryptoKet" items={['Explore', 'How it Works', 'Contact Us']} />
+          <FooterLinks heading="Web3DAO" items={['Explore', 'About', 'Contact']} />
           <FooterLinks heading="Support" items={['Help Center', 'Terms of service', 'Legal', 'Privacy policy']} extraClasses="ml-4" />
         </div>
       </div>
