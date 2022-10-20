@@ -5,15 +5,16 @@ import axios from 'axios';
 import { create as ipfsHttpClient } from 'ipfs-http-client';
 import { useRouter } from 'next/router';
 import { MarketAddress, MarketAddressABI } from './constants';
-
-const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0');
+import { NFTStorage, File, Blob } from 'nft.storage'
+const NFT_STORAGE_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDAyOTQzQjZBMkZiZDhFMzM3MjgxQWJFQmU2M2Y2M0VkNTcxNUY1MTEiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY2NjI1OTA5MjEwMCwibmFtZSI6IndlYjNkYW8ifQ.KfOSdm31d5bQQ428rPDMK5vxyCvDNmRaIfPA5np486E'
+const client = new NFTStorage({ token: NFT_STORAGE_TOKEN });
 
 const fetchContract = (signerOrProvider) => new ethers.Contract(MarketAddress, MarketAddressABI, signerOrProvider);
 
 export const NFTContext = React.createContext();
 
 export const NFTProvider = ({ children }) => {
-  const nftCurrency = 'ETH';
+  const nftCurrency = 'MATIC';
   const [currentAccount, setCurrentAccount] = useState('');
 
   const connectWallet = async () => {
@@ -41,10 +42,13 @@ export const NFTProvider = ({ children }) => {
 
   const uploadToIPFS = async (file) => {
     try {
-      const added = await client.add({ content: file });
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      const metadata = await client.store({
+        name: "ABC",
+        description: "ABC",
+        image: file
+      })
 
-      return url;
+      return metadata.data.image.href;
     } catch (error) {
       console.log('Error uploading to file');
     }
@@ -58,8 +62,10 @@ export const NFTProvider = ({ children }) => {
     });
 
     try {
-      const added = await client.add(data);
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      const metadata = new Blob([data]);
+      const cid = await client.storeBlob(metadata);
+      const url = "https://ipfs.io/ipfs/" + cid;
+
       await createSale(url, price);
 
       router.push('/');
@@ -84,13 +90,9 @@ export const NFTProvider = ({ children }) => {
     await transaction.wait();
   };
 
-  const fetchNFTs = async () => {
-    const provider = new ethers.providers.AlchemyProvider('goerli', 'gWfpFUrefvct5a7LThyvFfk-WFpmdx9p');
-
-    // const provider = new HDWalletProvider(
-    //   'exile enough road quote render sea depart voice iron hedgehog vocal cube',
-    //   'https://rinkeby.infura.io/v3/bdee63d200894dfb8d793b37d5a53115'
-    // );
+  const fetchNFTs = async (setLoading) => {
+    setLoading(true)
+    const provider = new ethers.providers.AlchemyProvider('maticmum', 'E5lhAEVwleqxCw-8s6jn08us4Cg7jlT5');
 
     const contract = fetchContract(provider);
 

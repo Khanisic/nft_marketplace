@@ -38,7 +38,7 @@ contract NFTMarketplace is ERC721URIStorage {
     );
 
 
-    constructor() ERC721("Metaverse Tokens", "METT") {
+    constructor() ERC721("WEB3 DAO Tokens", "WDAO") {
       owner = payable(msg.sender);
     }
 

@@ -38,7 +38,7 @@ const ListedNFTs = () => {
           <h2 className="font-poppins dark:text-white text-nft-black-1 text-2xl font-semibold mt-2 ml-4 sm:ml-2">NFTs listed for sale</h2>
           <div className="mt-3 w-full flex flex-wrap justify-start md:justify-center">
             {
-              nfts.map((nft) => <NFTCard key={nft.tokenId} nft={nft} />)
+              nfts.map((nft) => <> <NFTCard key={nft.tokenId} nft={nft} /> </>)
             }
           </div>
         </div>

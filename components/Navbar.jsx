@@ -118,7 +118,7 @@ const Navbar = () => {
         <Link href="/">
           <div className="flexCenter md:hidden cursor-pointer" onClick={() => setActive('Explore NFTs')}>
             <Image src={images.logo02} objectFit="contain" width={32} height={32} alt="logo" />
-            <p className=" dark:text-white text-nft-black-1 font-semibold text-lg ml-1">CryptoKet</p>
+            <p className=" dark:text-white text-nft-black-1 font-semibold text-lg ml-1">Web3DAO</p>
           </div>
         </Link>
         <Link href="/">

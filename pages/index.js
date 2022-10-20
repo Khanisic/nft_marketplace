@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import Image from 'next/dist/client/image';
 import { useTheme } from 'next-themes';
-import { Banner, CreatorCard, NFTCard, SearchBar } from '../components';
+import { Banner, CreatorCard, Loader, NFTCard, SearchBar } from '../components';
 import images from '../assets';
 import { NFTContext } from '../context/NFTContext';
 import { getCreators } from '../utils/getTopCreators';
@@ -16,6 +16,7 @@ const Home = () => {
   const [nfts, setNfts] = useState([]);
   const [nftsCopy, setNftsCopy] = useState([]);
   const [activeSelect, setActiveSelect] = useState('Recently added');
+  const [loading, setLoading] = useState(true)
   const handleScroll = (direction) => {
     const { current } = scrollRef;
 
@@ -45,10 +46,11 @@ const Home = () => {
   });
 
   useEffect(() => {
-    fetchNFTs()
+    fetchNFTs(setLoading)
       .then((items) => {
         setNfts(items);
         setNftsCopy(items);
+        setLoading(false)
       });
   }, []);
 
@@ -110,24 +112,29 @@ const Home = () => {
                   creatorEths={10 - i * 0.5}
                 />
               ))} */}
-              {topCreators.map((creator, i) => (
-                <CreatorCard
-                  key={creator.seller}
-                  rank={i + 1}
-                  creatorImage={images[`creator${i + 1}`]}
-                  creatorName={shortenAddress(creator.seller)}
-                  creatorEths={creator.sum}
-                />
-              ))}
+              {
+                !loading
+                  ?
+                  topCreators.map((creator, i) => (
+                    <CreatorCard
+                      key={creator.seller}
+                      rank={i + 1}
+                      creatorImage={images[`creator${i + 1}`]}
+                      creatorName={shortenAddress(creator.seller)}
+                      creatorEths={creator.sum}
+                    />
+                  ))
+                  :
+                  <Loader />}
               {!hideButtons && (
-              <>
-                <div onClick={() => handleScroll('left')} className="absolute w-8 h-8 minlg:w-12 minlg:h-12 top-45 cursor-pointer left-0">
-                  <Image src={images.left} layout="fill" objectFit="contain" alt="left_arrow" className={theme === 'light' ? 'filter invert' : undefined} />
-                </div>
-                <div onClick={() => handleScroll('right')} className="absolute w-8 h-8 minlg:w-12 minlg:h-12 top-45 cursor-pointer right-0">
-                  <Image src={images.right} layout="fill" objectFit="contain" alt="left_arrow" className={theme === 'light' ? 'filter invert' : undefined} />
-                </div>
-              </>
+                <>
+                  <div onClick={() => handleScroll('left')} className="absolute w-8 h-8 minlg:w-12 minlg:h-12 top-45 cursor-pointer left-0">
+                    <Image src={images.left} layout="fill" objectFit="contain" alt="left_arrow" className={theme === 'light' ? 'filter invert' : undefined} />
+                  </div>
+                  <div onClick={() => handleScroll('right')} className="absolute w-8 h-8 minlg:w-12 minlg:h-12 top-45 cursor-pointer right-0">
+                    <Image src={images.right} layout="fill" objectFit="contain" alt="left_arrow" className={theme === 'light' ? 'filter invert' : undefined} />
+                  </div>
+                </>
               )}
             </div>
           </div>
@@ -142,13 +149,15 @@ const Home = () => {
           <div className="mt-3 w-full flex flex-wrap justify-start md:justify-center">
 
             {
-              nfts.map((nft) => (
-                <NFTCard
-                  key={nft.tokenId}
-                  nft={nft}
-                />
-              ))
-          }
+              !loading ?
+                nfts.map((nft) => (
+                  <NFTCard
+                    key={nft.tokenId}
+                    nft={nft}
+                  />
+                )) :
+                <Loader />
+            }
             {/* {
                   [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
                     <NFTCard
