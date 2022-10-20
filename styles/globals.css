@@ -8,7 +8,9 @@
 .nft-gradient {
     background: #A87D47;
 }
-
+.nft-banner-gradient {
+    background: linear-gradient(101.12deg, #510400 27.35%, #005856 100%);
+}
 .white-bg {
     background: rgba(255, 255, 255, 0.2);
 }
