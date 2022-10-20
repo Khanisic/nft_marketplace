@@ -8,6 +8,7 @@ import { Button, Loader, Modal } from '../components';
 import images from '../assets';
 
 const PaymentBodyCmp = ({ nft, nftCurrency }) => (
+
   <div className="flex flex-col">
     <div className="flexBetween">
       <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base minlg:text-xl">Item</p>
@@ -16,7 +17,7 @@ const PaymentBodyCmp = ({ nft, nftCurrency }) => (
     <div className="flexBetweenStart my-5">
       <div className="flex-1 flexStartCenter">
         <div className="relative w-28 h-28">
-          <Image src={nft.image || images[`nft${nft.i}`]} layout="fill" objectFit="cover" />
+          <Image src={img || images[`nft${nft.i}`]} layout="fill" objectFit="cover" />
         </div>
         <div className="flexCenterStart flex-col ml-5">
           <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-sm minlg:text-xl">{shortenAddress(nft.seller)}</p>

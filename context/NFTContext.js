@@ -103,6 +103,9 @@ export const NFTProvider = ({ children }) => {
         const tokenURI = await contract.tokenURI(tokenId);
         const { data: { image, name, description } } = await axios.get(tokenURI);
         const price = ethers.utils.formatUnits(unformattedPrice.toString(), 'ether');
+        
+        image.replace("https:ipfs.io","https://infura-ipfs.io")
+        console.log(image)
 
         return {
           price,

@@ -21,7 +21,7 @@ const CreateNFT = () => {
   const onDrop = useCallback(async (acceptedFile) => {
     const url = await uploadToIPFS(acceptedFile[0]);
     console.log({ url });
-    setFileUrl(url.replace("ipfs://","https:ipfs.io/ipfs/"));
+    setFileUrl(url.replace("ipfs://","https://ipfs.io/ipfs/"));
   }, []);
 
   const {
