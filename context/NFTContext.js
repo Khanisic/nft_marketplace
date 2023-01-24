@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Web3Modal from 'web3modal';
-import { ContractFactory, ethers } from 'ethers';
+import { ethers } from 'ethers';
 import axios from 'axios';
-import { create as ipfsHttpClient } from 'ipfs-http-client';
-import { useRouter } from 'next/router';
 import { MarketAddress, MarketAddressABI } from './constants';
-import { NFTStorage, File, Blob } from 'nft.storage'
+import { NFTStorage, Blob } from 'nft.storage'
 const NFT_STORAGE_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDAyOTQzQjZBMkZiZDhFMzM3MjgxQWJFQmU2M2Y2M0VkNTcxNUY1MTEiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY2NjI1OTA5MjEwMCwibmFtZSI6IndlYjNkYW8ifQ.KfOSdm31d5bQQ428rPDMK5vxyCvDNmRaIfPA5np486E'
 const client = new NFTStorage({ token: NFT_STORAGE_TOKEN });
 
