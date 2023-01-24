@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 import axios from 'axios';
 import { MarketAddress, MarketAddressABI } from './constants';
 import { NFTStorage, Blob } from 'nft.storage'
-const NFT_STORAGE_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDAyOTQzQjZBMkZiZDhFMzM3MjgxQWJFQmU2M2Y2M0VkNTcxNUY1MTEiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY2NjI1OTA5MjEwMCwibmFtZSI6IndlYjNkYW8ifQ.KfOSdm31d5bQQ428rPDMK5vxyCvDNmRaIfPA5np486E'
+const NFT_STORAGE_TOKEN = process.env.NEXT_PUBLIC_NFT_STORAGE_TOKEN
 const client = new NFTStorage({ token: NFT_STORAGE_TOKEN });
 
 const fetchContract = (signerOrProvider) => new ethers.Contract(MarketAddress, MarketAddressABI, signerOrProvider);
@@ -90,7 +90,7 @@ export const NFTProvider = ({ children }) => {
 
   const fetchNFTs = async (setLoading) => {
     setLoading(true)
-    const provider = new ethers.providers.AlchemyProvider('maticmum', 'E5lhAEVwleqxCw-8s6jn08us4Cg7jlT5');
+    const provider = new ethers.providers.AlchemyProvider('maticmum', process.env.NEXT_PUBLIC_ALCHEMY_KEY);
 
     const contract = fetchContract(provider);
 

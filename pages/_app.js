@@ -14,7 +14,7 @@ const Marketplace = ({ Component, pageProps }) => (
         <title>WebDAO Marketplace</title>
         <meta
           name="description"
-          content="Web3DAO Marketplace"
+          content="Khanisic Marketplace"
         />
       </Head>
       <div className="dark:bg-nft-dark bg-white min-h-screen">
